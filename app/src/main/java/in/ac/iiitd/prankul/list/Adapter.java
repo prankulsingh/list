@@ -1,5 +1,6 @@
 package in.ac.iiitd.prankul.list;
 
+import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,7 +25,7 @@ public class Adapter extends RecyclerView.Adapter {
         this.list = list;
     }
 
-    public static class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener
+    public class ItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         private TextView title,subtitle;
         private Button a,b;
@@ -32,27 +33,32 @@ public class Adapter extends RecyclerView.Adapter {
 
         private int KEY = 0;
 
-        public ItemHolder(View itemView) {
+        public ItemHolder(final View itemView) {
             super(itemView);
 
             title = (TextView) itemView.findViewById(R.id.title);
             subtitle = (TextView) itemView.findViewById(R.id.subtitle);
             a = (Button) itemView.findViewById(R.id.buttona);
             b = (Button) itemView.findViewById(R.id.buttonb);
-
             itemView.setOnClickListener(this);
-        }
 
-        @Override
-        public void onClick(View v)
-        {
-            Toast.makeText(itemView.getContext(), KEY , Toast.LENGTH_SHORT).show();
+            a.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(itemView.getContext(),getAdapterPosition()+"",Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
         public void bindItem(ItemDetails item) {
             this.item = item;
             title.setText(item.getTitle());
             subtitle.setText(item.getSubtitle());
+        }
+
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(itemView.getContext(),getAdapterPosition()+"",Toast.LENGTH_SHORT).show();
         }
     }
 
